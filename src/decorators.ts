@@ -17,3 +17,9 @@ export function PrimaryColumn(): Function {
 
     }
 }
+
+export function OneToOne(): Function {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+
+    }
+}

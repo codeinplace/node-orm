@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn } from './decorators';
+import { Entity, Column, PrimaryColumn, OneToOne } from './decorators';
 import { User } from './UserModel';
 
 @Entity()

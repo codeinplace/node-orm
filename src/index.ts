@@ -1,11 +1,11 @@
-import { NotaFiscalModel } from "./NotaFiscalModel";
+import { User } from "./UserModel";
 import { Repository } from "./Repository";
 
 class Test {
-    nf: Repository<NotaFiscalModel>;
+    nf: Repository<User>;
 
     constructor() {
-        this.nf = new Repository<NotaFiscalModel>();
+        this.nf = new Repository<User>();
     }
 
     listProducts() {
