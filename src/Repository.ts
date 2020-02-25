@@ -1,15 +1,28 @@
-import { ObjectLiteral } from "./ObjectLiteral";
+type KeysOfNonType<TTarget, TValue> = {
+    [K in keyof TTarget]: TTarget[K] extends TValue ? never : K
+}[keyof TTarget];
 
 interface FindAllOptions<Entity = any> {
-    // TODO: remove duplicates
     select?: (keyof Entity)[];
-    relations: string[];
+    relations?: KeysOfNonType<Entity, number|string|Date>[];
 }
 
-export class Repository<Entity extends ObjectLiteral> {
+import { connection } from './connection';
+
+export class Repository<Entity extends Object> {
+
+    constructor(model) {
+        console.log('model', model);
+        console.log('metadata', model.metadata);
+    }
 
     findAll(options?: FindAllOptions<Entity>) {
-        return [1, 2, 3, 4, 5];
+        // connection.then((conn) => {
+        //     conn.query(`SELECT * FROM ${}`)
+        //         .then((data) => {
+        //             console.log(data);
+        //         });
+        // })
     }
 
     findOne() {
@@ -18,9 +31,5 @@ export class Repository<Entity extends ObjectLiteral> {
 
     findById(id: number) {
         return 100;
-    }
-
-    relations(relations: string[]) {
-
     }
 }

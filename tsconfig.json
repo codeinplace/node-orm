@@ -3,9 +3,12 @@
         "target": "ES5",
         "experimentalDecorators": true,
         "outDir": "dist",
-        "allowJs": true
+        "typeRoots": [
+            "./node_modules/@types",
+            "./@types"
+        ]
     },
     "include": [
         "./src/**/*"
-    ],
+    ]
 }

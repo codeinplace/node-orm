@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryColumn, OneToOne } from './decorators';
-import { User } from './UserModel';
+import { Entity, Column, PrimaryColumn, OneToOne } from '../decorators';
+import { User } from './User';
 
-@Entity()
+@Entity({ database: 'my_database', table: 'profile' })
 export class Profile {
 
     @PrimaryColumn()

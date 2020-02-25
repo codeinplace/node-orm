@@ -1,20 +1,18 @@
-import { User } from "./UserModel";
+import { User } from "./models/User";
 import { Repository } from "./Repository";
+import { Application } from "./Applicaton";
 
 class Test {
-    nf: Repository<User>;
+    userRepository: Repository<User>;
 
     constructor() {
-        this.nf = new Repository<User>();
+        this.userRepository = new Repository<User>(User);
     }
 
-    listProducts() {
-        this.nf.findAll({
-            // TODO: remove duplicates
-            select: ['numero_nota'],
-            relations: [''],
-        })
+    async listProducts() {
+        await this.userRepository.findAll();
     }
 }
 
-new Test();
+new Application().init();
+new Test().listProducts();

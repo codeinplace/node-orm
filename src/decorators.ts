@@ -1,14 +1,23 @@
-import { Repository } from './Repository';
+import "reflect-metadata";
 
-export function Entity(): Function {
+interface EntityOptions {
+    database: string;
+    table: string;
+}
+
+const requiredMetadataKey = Symbol("required");
+
+export function Entity(options: EntityOptions): Function {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-
+        let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || [];
+        console.log('target', target);
+        Reflect.defineMetadata(requiredMetadataKey, existingRequiredParameters, target, propertyKey);
     }
 }
 
 export function Column(): Function {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        console.log(target);
+        
     }
 }
 
