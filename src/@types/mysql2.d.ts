@@ -1,17 +1,19 @@
 // import * as mysql from 'mysql';
-// mysql.createPool().query()
+// mysql.createPool().query('fsddfs', [], () => {
+
+// })
 
 declare module 'mysql2' {
-    import { Connection, Pool, PoolCluster, PoolClusterConfig, PoolConfig, ConnectionConfig, Query, QueryOptions } from 'mysql';
+    import { Connection, Pool, PoolCluster, PoolClusterConfig, PoolConfig, ConnectionConfig, Query, QueryOptions, queryCallback } from 'mysql';
 
     interface MySQL2Connection extends Connection {
         promise(): Promise<Connection>;
     }
 
     interface InnerPool {
-        query(query: Query): Promise<any[]>;
-        query(options: string | QueryOptions): Promise<any[]>;
-        query(options: string, values: any): Promise<any[]>;
+        query(query: Query): Promise<any>;
+        query(options: string | QueryOptions): Promise<any>;
+        query(options: string, values: any): Promise<any>;
     }
     interface MySQL2Pool extends Pool {
         promise(): Promise<InnerPool>;

@@ -1,17 +1,9 @@
 import "reflect-metadata";
-
-interface EntityOptions {
-    database: string;
-    table: string;
-}
-
-const requiredMetadataKey = Symbol("required");
+import { EntityOptions } from "./EntityOptions";
 
 export function Entity(options: EntityOptions): Function {
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || [];
-        console.log('target', target);
-        Reflect.defineMetadata(requiredMetadataKey, existingRequiredParameters, target, propertyKey);
+    return function (target: any) {
+        Reflect.defineMetadata('model:info', options, target);
     }
 }
 

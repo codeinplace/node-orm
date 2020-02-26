@@ -10,7 +10,13 @@ class Test {
     }
 
     async listProducts() {
-        await this.userRepository.findAll();
+        const result = await this.userRepository.findAll({
+            where: {
+                id: 1,
+                address: 1
+            }
+        });
+        console.log(result);
     }
 }
 

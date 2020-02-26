@@ -1,28 +1,25 @@
-type KeysOfNonType<TTarget, TValue> = {
-    [K in keyof TTarget]: TTarget[K] extends TValue ? never : K
-}[keyof TTarget];
-
-interface FindAllOptions<Entity = any> {
-    select?: (keyof Entity)[];
-    relations?: KeysOfNonType<Entity, number|string|Date>[];
-}
-
 import { connection } from './connection';
+import { EntityOptions } from './EntityOptions';
+import { FindAllOptions } from './findOptions';
 
 export class Repository<Entity extends Object> {
+    
+    metadata: EntityOptions;
 
-    constructor(model) {
-        console.log('model', model);
-        console.log('metadata', model.metadata);
+    constructor(model: any) {
+        this.metadata = Reflect.getMetadata('model:info', model);
     }
 
-    findAll(options?: FindAllOptions<Entity>) {
-        // connection.then((conn) => {
-        //     conn.query(`SELECT * FROM ${}`)
-        //         .then((data) => {
-        //             console.log(data);
-        //         });
-        // })
+    async findAll(options?: FindAllOptions<Entity>): Promise<Entity> {
+        const { database, table } = this.metadata;
+        const fields = options?.select;
+
+        const sql = `SELECT ${fields ? fields.join() : '*'} FROM ${database}.${table}`;
+
+        console.log('sql', sql);
+        
+        const conn = await connection;
+        return conn.query(sql);
     }
 
     findOne() {

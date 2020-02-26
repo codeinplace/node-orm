@@ -1,11 +1,14 @@
 import { Entity, Column, OneToOne } from '../decorators';
 import { Profile } from './Profile';
 
-@Entity({ database: 'my_database', table: 'user' })
+@Entity({ database: 'test', table: 'user' })
 export class User {
 
     @Column()
     id: number;
+
+    @Column()
+    name: string;
 
     @Column()
     username: string;
@@ -15,4 +18,7 @@ export class User {
 
     @OneToOne()
     profile: Profile;
+
+    @Column()
+    created_at: Date;
 }

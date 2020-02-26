@@ -1,17 +1,17 @@
 import { Entity, Column, PrimaryColumn, OneToOne } from '../decorators';
 import { User } from './User';
 
-@Entity({ database: 'my_database', table: 'profile' })
+@Entity({ database: 'test', table: 'profile' })
 export class Profile {
 
     @PrimaryColumn()
     id: number;
 
     @Column()
-    nome: string;
+    job_area: string;
 
     @Column()
-    cnpj: number;
+    picture_path: string;
 
     @OneToOne()
     user: User;
