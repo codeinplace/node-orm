@@ -16,7 +16,7 @@ declare module 'mysql2' {
         query(options: string, values: any): Promise<any>;
     }
     interface MySQL2Pool extends Pool {
-        promise(): Promise<InnerPool>;
+        promise(): InnerPool;
     }
 
     interface MySQL2PoolCluster extends PoolCluster {

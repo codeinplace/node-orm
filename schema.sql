@@ -5,14 +5,14 @@ CREATE TABLE `test`.`user` (
   `name` VARCHAR(255) NOT NULL,
   `username` VARCHAR(100) NOT NULL,
   `address` TEXT NULL,
-  `profile_id` INT NOT NULL,
+  `profile_id` INT DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`));
 
-CREATE TABLE `profile` (
+CREATE TABLE `test`.`profile` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `job_area` varchar(255) DEFAULT NULL,
   `picture_path` varchar(255) DEFAULT NULL,
-  `user_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

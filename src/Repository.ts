@@ -1,4 +1,4 @@
-import { connection } from './connection';
+import { mysql } from './connection';
 import { EntityOptions } from './EntityOptions';
 import { FindAllOptions } from './findOptions';
 
@@ -13,13 +13,24 @@ export class Repository<Entity extends Object> {
     async findAll(options?: FindAllOptions<Entity>): Promise<Entity> {
         const { database, table } = this.metadata;
         const fields = options?.select;
+        const where = options?.where;
+        const values = [];
+        const whereConditions = where ? Object.entries(where)
+            .map(([k, v]) => {
+                values.push(v);
+                return `${k} = ?`;
+            })
+            .join(' AND ') : undefined;
 
-        const sql = `SELECT ${fields ? fields.join() : '*'} FROM ${database}.${table}`;
+        const sql = `
+            SELECT ${fields ? fields.join(', ') : '*'}
+            FROM ${database}.${table}
+            ${where ? `WHERE ${whereConditions}` : ''}
+        `.replace(/(\r\n|\n|\r| +(?= ))/gm, '').trim();
 
-        console.log('sql', sql);
-        
-        const conn = await connection;
-        return conn.query(sql);
+        console.log(sql, values)
+        const [result] = await mysql.query(sql, values);
+        return result;
     }
 
     findOne() {

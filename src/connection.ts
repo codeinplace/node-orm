@@ -1,8 +1,14 @@
-import { createPool } from 'mysql2';
+import { createPool, MySQL2Pool } from 'mysql2';
 
-export const connection = createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'secret',
-    database: 'test'
-}).promise();
+var instance: MySQL2Pool;
+
+if (!instance) {
+    instance = createPool({
+        host: 'localhost',
+        user: 'root',
+        password: 'secret',
+        database: 'test',
+    }).promise();
+}
+
+export { instance as mysql };
