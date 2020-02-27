@@ -10,7 +10,7 @@ export class Repository<Entity extends Object> {
         this.metadata = Reflect.getMetadata('model:info', model);
     }
 
-    async findAll(options?: FindAllOptions<Entity>): Promise<Entity> {
+    async find(options?: FindAllOptions<Entity>): Promise<Entity> {
         const { database, table } = this.metadata;
         const fields = options?.select;
         const where = options?.where;

@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@rededompedro/mysql": "^2.0.6",
     "faker": "^4.1.0",
     "knex": "^0.20.10",
     "mysql2": "^2.1.0",

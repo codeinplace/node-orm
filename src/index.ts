@@ -15,37 +15,17 @@ class Test {
             select: ['username', 'name'],
             relations: ['profile'],
             where: {
-                situacao: 'E',
-                deleted_at: null,
-                $or: [
-                    Raw('ABS(PERIOD_DIFF(SUBSTR(v.data, 1, 6), SUBSTR(n.data_saida, 1, 6))) = 0'),
-                    Raw('ABS(PERIOD_DIFF(SUBSTR(v.data, 1, 6), SUBSTR(n.data_saida, 1, 6))) = 1 AND v.data = ?', [data])
-                ]
+                date: { $gt: 2010 },
+                name: { $like: 'joe' },
+                ???
             }
-        }); 
-        console.log(result);
+        });
+
+        // OR https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+
+        // WHERE date > 2010 AND name like '%joe%' OR username = 'Joe'
     }
 }
 
 new Application().init();
 new Test().listProducts();
-
-// AND n.situacao = 'E'
-// AND n.deleted_at IS NULL
-// AND (
-//     (
-//         ABS(
-//             PERIOD_DIFF(SUBSTR(v.data, 1, 6), SUBSTR(n.data_saida, 1, 6))
-//         ) = 0
-//     )
-//     OR (
-//         ABS(
-//             PERIOD_DIFF(SUBSTR(v.data, 1, 6), SUBSTR(n.data_saida, 1, 6))
-//         ) = 1
-//         AND v.data = ?
-//     )
-//     OR n.id_vinculo IS NULL
-//     OR v.id IS NULL
-// )
-
-ABS(PERIOD_DIFF(SUBSTR(v.data, 1, 6), SUBSTR(n.data_saida, 1, 6))) = 1 AND v.data = ?
