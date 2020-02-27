@@ -14,16 +14,8 @@ class Test {
         const result = await this.userRepository.find({
             select: ['username', 'name'],
             relations: ['profile'],
-            where: {
-                date: { $gt: 2010 },
-                name: { $like: 'joe' },
-                ???
-            }
         });
-
-        // OR https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
-
-        // WHERE date > 2010 AND name like '%joe%' OR username = 'Joe'
+        console.log(result);
     }
 }
 
