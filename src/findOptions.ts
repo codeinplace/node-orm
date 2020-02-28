@@ -3,7 +3,7 @@ import { KeysOfNonType } from "./KeysOfNonType";
 export interface FindAllOptions<Entity = any> {
     select?: (keyof Entity)[];
     relations?: KeysOfNonType<Entity, number|string|Date>[];
-    where?: { [K in keyof Entity]?: any } & { $or?: { [K in keyof Entity]?: any } | string[] };
+    where?: { [K in keyof Entity]?: any };
 }
 
 export interface FindOneOptions<Entity = any> {

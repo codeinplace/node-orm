@@ -1,6 +1,8 @@
-import { createPool, MySQL2Pool } from 'mysql2';
+import { createPool } from '@codeinplace/node-mysql';
+//TODO: better type import, rename MySQLPromise to Pool type
+import { MySQLPromise } from '@codeinplace/node-mysql/dist/MySQLPromise';
 
-var instance: MySQL2Pool;
+var instance: MySQLPromise;
 
 if (!instance) {
     instance = createPool({
@@ -8,7 +10,7 @@ if (!instance) {
         user: 'root',
         password: 'secret',
         database: 'test',
-    }).promise();
+    });
 }
 
 export { instance as mysql };

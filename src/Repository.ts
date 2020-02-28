@@ -1,6 +1,7 @@
 import { mysql } from './connection';
 import { EntityOptions } from './EntityOptions';
 import { FindAllOptions } from './findOptions';
+import { createQuery } from './helpers';
 
 export class Repository<Entity extends Object> {
     
@@ -10,7 +11,7 @@ export class Repository<Entity extends Object> {
         this.metadata = Reflect.getMetadata('model:info', model);
     }
 
-    async find(options?: FindAllOptions<Entity>): Promise<Entity> {
+    async find(options?: FindAllOptions<Entity>): Promise<any> {
         const { database, table } = this.metadata;
         const fields = options?.select;
         const where = options?.where;
@@ -22,14 +23,14 @@ export class Repository<Entity extends Object> {
             })
             .join(' AND ') : undefined;
 
-        const sql = `
+        const sql = createQuery(`
             SELECT ${fields ? fields.join(', ') : '*'}
             FROM ${database}.${table}
             ${where ? `WHERE ${whereConditions}` : ''}
-        `.replace(/(\r\n|\n|\r| +(?= ))/gm, '').trim();
+        `);
 
         console.log(sql, values)
-        const [result] = await mysql.query(sql, values);
+        const result = await mysql.query(sql, values);
         return result;
     }
 
