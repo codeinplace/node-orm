@@ -16,3 +16,9 @@ CREATE TABLE `test`.`profile` (
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO
+  `test`.`profile` (`id`, `job_area`, `picture_path`, `user_id`)
+VALUES
+  ('1', 'test', '/tmp/path/', '12345'),
+  ('2', 'test2', '/tmp/path2/', '123456');

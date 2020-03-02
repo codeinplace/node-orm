@@ -1,10 +1,10 @@
-import { Entity, Column, OneToOne } from '../decorators';
+import { Entity, Column, OneToOne, PrimaryColumn } from '../decorators';
 import { Profile } from './Profile';
 
 @Entity({ database: 'test', table: 'user' })
 export class User {
 
-    @Column()
+    @PrimaryColumn()
     id: number;
 
     @Column()

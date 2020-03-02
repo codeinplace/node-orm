@@ -1,9 +1,12 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 import { EntityOptions } from "./EntityOptions";
+import { Store } from './Store';
 
 export function Entity(options: EntityOptions): Function {
     return function (target: any) {
         Reflect.defineMetadata('model:info', options, target);
+        const { database, table } = target;
+        Store.set(`${database}_${table}`, target);
     }
 }
 
