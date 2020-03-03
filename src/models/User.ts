@@ -16,9 +16,9 @@ export class User {
     @Column()
     address: string;
 
-    @OneToOne()
-    profile: Profile;
-
     @Column()
     created_at: Date;
+
+    @OneToOne(type => Profile)
+    profile: Profile;
 }

@@ -1,16 +1,21 @@
-var Store = {
-    data: {},
+class Store {
 
-    get: function (key: string) {
+    private static data = {};
+
+    static get(key: string) {
         return this.data[key];
-    },
+    }
 
-    set: function (key: string, data: {}) {
+    static set(key: string, data: {}) {
         if (!(key in this.data)) {
             this.data[key] = {};
         }
         this.data[key] = Object.assign(this.data[key], data);
     }
-};
+
+    static getAll() {
+        return this.data;
+    }
+}
 
 export { Store };

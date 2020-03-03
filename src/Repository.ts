@@ -1,24 +1,24 @@
 import { mysql } from './connection';
-import { EntityOptions } from './EntityOptions';
 import { FindAllOptions } from './findOptions';
 import { createQuery } from './helpers';
 import { truthy } from './utils';
 import { Store } from './Store';
 
 export class Repository<Entity extends Object> {
-    
-    metadata: EntityOptions;
+
+    model: any;
 
     constructor(model: any) {
-        this.metadata = Reflect.getMetadata('model:info', model);
-        console.log(Store.getData());
+        this.model = model;
     }
 
     async find(options?: FindAllOptions<Entity>): Promise<any> {
-        const { database, table } = this.metadata;
+        const modelInfos = Store.getAll();
+        const currentModelInfo = modelInfos[this.model.name];
+        const { database, table, relations } = currentModelInfo;
         const fields = truthy(options?.select);
         const where = truthy(options?.where);
-        const relations = truthy(options?.relations);
+        const relationsOpt = truthy(options?.relations);
         const values = [];
 
         const fieldsSQL = fields ? fields.join(', ') : '*';
@@ -30,17 +30,24 @@ export class Repository<Entity extends Object> {
             })
             .join(' AND ') : '';
 
-        const innerSQL = relations ? '' : '';
+        console.log(modelInfos);
+
+        const innerSQL = relationsOpt ? relationsOpt.map((r: string) => {
+            if (r in relations) {
+                const referencedTableName = modelInfos[relations[r].className].table;
+                return `LEFT JOIN ${referencedTableName} ON ${referencedTableName}.${relations[r].column} = ${table}.${'id'}`
+            }
+        })
+        .join('\n') : '';
 
         const sql = createQuery(`
             SELECT ${fieldsSQL}
-            ${innerSQL}
             FROM ${database}.${table}
+            ${innerSQL}
             ${whereSQL}
         `);
 
-        // console.log(sql, values);
-        console.log(this.metadata);
+        console.log(sql, values);
         const result = await mysql.query(sql, values);
         return result;
     }

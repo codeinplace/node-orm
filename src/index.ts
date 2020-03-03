@@ -1,20 +1,19 @@
 //@ts-nocheck
-import { User } from "./models/User";
+import { Profile } from "./models/Profile";
 import { Repository } from "./Repository";
 import { Application } from "./Applicaton";
-import { Profile } from "./models/Profile";
 
 class Test {
     profileRepository: Repository<Profile>;
 
     constructor() {
-        this.profileRepository = new Repository<Profile>(Profile);
+        this.profileRepository = new Repository<Profile>(typeof Profile);
     }
 
     async listProducts() {
         const result = await this.profileRepository.find({
-            select: ['job_area', 'picture_path'],
-            relations: ['user'],
+            select: ['user.id', 'user.name', 'user.username', 'profile.picture_path'],
+            relations: ['profile'],
         });
         console.log(result);
     }

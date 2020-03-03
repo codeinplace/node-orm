@@ -13,6 +13,6 @@ export class Profile {
     @Column()
     picture_path: string;
 
-    @OneToOne()
+    @OneToOne(type => User)
     user: User;
 }

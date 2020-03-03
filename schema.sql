@@ -18,7 +18,17 @@ CREATE TABLE `test`.`profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO
+  `test`.`user` (`id`, `name`, `username`, `address`, `profile_id`, `created_at`)
+VALUES
+  (1, 'Jonathan Borges', 'jonathborg', 'Rua teste', NULL, NOW()),
+  (2, 'Jonathan Rocha', 'jonathrocha', 'Rua alo 123', NULL, NOW()),
+  (3, 'Daniel Lopes', 'dan.lopes', 'Rua hello world', NULL, NOW()),
+  (4, 'Dimas', 'dimas', 'Rua lorem ipsum', NULL, NOW());
+
+INSERT INTO
   `test`.`profile` (`id`, `job_area`, `picture_path`, `user_id`)
 VALUES
-  ('1', 'test', '/tmp/path/', '12345'),
-  ('2', 'test2', '/tmp/path2/', '123456');
+  (1, 'fullstack', '/tmp/pictures/profile/1.jpg', 1),
+  (2, 'fullstack', '/tmp/pictures/profile/2.jpg', 2),
+  (3, 'frontend', '/tmp/pictures/profile/3.jpg', 3),
+  (4, 'backend', '/tmp/pictures/profile/4.jpg', 4);
