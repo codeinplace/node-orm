@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { PropertyDecoratorFactory } from '@loopback/metadata';
+=======
+import 'reflect-metadata';
+>>>>>>> parent of 29dc9b9... fix type
 import { EntityOptions } from "./EntityOptions";
 import { data } from './Storage';
 import { OneToOneOptions } from './RelationsOptions';
@@ -22,15 +26,14 @@ export function PrimaryColumn(): Function {
     }
 }
 
-export interface MyPropertyMetadata {
-    column: string;
-    references?: string;
-}
-
-export function OneToOne(options: MyPropertyMetadata): PropertyDecorator {
-    return PropertyDecoratorFactory.createDecorator<MyPropertyMetadata>(
-        'meta-relations',
-        options,
-        { decoratorName: '@OneToOne' }
-    );
+// https://github.com/TypeStrong/ts-node/issues/495
+export function OneToOne(typeRef?: (type?: any) => Function): PropertyDecorator {
+    return function (target: any, propertyKey: string) {
+        // setTimeout(() => {
+            let type = typeRef();
+            let typeName = type ? type.name : undefined;
+            console.log(`Class '${target.constructor.name}' has a field named '${propertyKey}' with type '${typeName}'`);
+            debugger;
+        // }, 1000);
+    }
 }
