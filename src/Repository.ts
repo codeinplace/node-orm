@@ -2,7 +2,7 @@ import { mysql } from './connection';
 import { FindAllOptions } from './findOptions';
 import { createQuery } from './helpers';
 import { truthy } from './utils';
-import { Store } from './Store';
+import { data } from './Storage';
 
 export class Repository<Entity extends Object> {
 
@@ -13,8 +13,7 @@ export class Repository<Entity extends Object> {
     }
 
     async find(options?: FindAllOptions<Entity>): Promise<any> {
-        const modelInfos: any = Store.getAll();
-        console.log(this.model.name);
+        const modelInfos = data;
         const currentModelInfo = modelInfos[this.model.name];
         const { database, table, relations } = currentModelInfo;
         const fields = truthy(options?.select);
@@ -31,6 +30,9 @@ export class Repository<Entity extends Object> {
             })
             .join(' AND ') : '';
 
+        console.log(currentModelInfo);
+        debugger
+
         const innerSQL = relationsOpt ? relationsOpt.map((r: string) => {
             if (r in relations) {
                 const referencedTableName = modelInfos[relations[r].className].table;
@@ -38,6 +40,8 @@ export class Repository<Entity extends Object> {
             }
         })
         .join('\n') : '';
+
+        console.log('innerSQL', innerSQL);
 
         const sql = createQuery(`
             SELECT ${fieldsSQL}

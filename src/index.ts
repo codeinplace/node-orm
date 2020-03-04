@@ -13,11 +13,15 @@ class Test {
     async listProducts() {
         const result = await this.profileRepository.find({
             select: ['user.id', 'user.name', 'user.username', 'profile.picture_path'],
-            relations: ['profile'],
+            relations: ['user'],
         });
         console.log(result);
+        return;
     }
 }
 
-new Application().init();
-new Test().listProducts();
+new Application().init()
+    .then(() => {
+        new Test().listProducts()
+            .then(() => { console.log('done!') })
+    });

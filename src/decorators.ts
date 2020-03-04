@@ -1,14 +1,12 @@
+import { PropertyDecoratorFactory } from '@loopback/metadata';
 import { EntityOptions } from "./EntityOptions";
-import { Store } from './Store';
+import { data } from './Storage';
 import { OneToOneOptions } from './RelationsOptions';
 
 export function Entity(options: EntityOptions): Function {
     return function (target: any) {
         const { database, table } = options;
-        Store.set(target.name, { database, table });
-        // console.log('target', target);
-        // console.log('propertyKey', propertyKey);
-        // console.log('descriptor', descriptor);
+        data[target.name] = { ...data[target.name], ...{ database, table }};
     }
 }
 
@@ -24,13 +22,15 @@ export function PrimaryColumn(): Function {
     }
 }
 
-// https://github.com/TypeStrong/ts-node/issues/495
-export function OneToOne(typeRef?: (type?: any) => Function): PropertyDecorator {
-    return function (target: any, propertyKey: string) {
-        Store.set(target.constructor.name, {
-            relations: {
-                [propertyKey]: { typeRef }
-            }
-        });
-    }
+export interface MyPropertyMetadata {
+    column: string;
+    references?: string;
+}
+
+export function OneToOne(options: MyPropertyMetadata): PropertyDecorator {
+    return PropertyDecoratorFactory.createDecorator<MyPropertyMetadata>(
+        'meta-relations',
+        options,
+        { decoratorName: '@OneToOne' }
+    );
 }

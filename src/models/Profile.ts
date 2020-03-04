@@ -13,6 +13,6 @@ export class Profile {
     @Column()
     picture_path: string;
 
-    @OneToOne(type => User)
+    // @OneToOne({ column: 'user_id', references: 'id' })
     user: User;
 }

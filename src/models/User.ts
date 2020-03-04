@@ -19,6 +19,6 @@ export class User {
     @Column()
     created_at: Date;
 
-    @OneToOne(type => Profile)
+    @OneToOne({ column: 'profile_id', references: 'id' })
     profile: Profile;
 }
