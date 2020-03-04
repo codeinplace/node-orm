@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { EntityOptions } from "./EntityOptions";
 import { Store } from './Store';
 import { OneToOneOptions } from './RelationsOptions';
@@ -28,11 +27,10 @@ export function PrimaryColumn(): Function {
 // https://github.com/TypeStrong/ts-node/issues/495
 export function OneToOne(typeRef?: (type?: any) => Function): PropertyDecorator {
     return function (target: any, propertyKey: string) {
-        // setTimeout(() => {
-            let type = typeRef();
-            let typeName = type ? type.name : undefined;
-            console.log(`Class '${target.constructor.name}' has a field named '${propertyKey}' with type '${typeName}'`);
-            debugger;
-        // }, 1000);
+        Store.set(target.constructor.name, {
+            relations: {
+                [propertyKey]: { typeRef }
+            }
+        });
     }
 }

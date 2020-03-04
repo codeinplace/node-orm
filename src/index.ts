@@ -7,7 +7,7 @@ class Test {
     profileRepository: Repository<Profile>;
 
     constructor() {
-        this.profileRepository = new Repository<Profile>(typeof Profile);
+        this.profileRepository = new Repository<Profile>(Profile);
     }
 
     async listProducts() {

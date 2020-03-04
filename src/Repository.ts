@@ -13,7 +13,8 @@ export class Repository<Entity extends Object> {
     }
 
     async find(options?: FindAllOptions<Entity>): Promise<any> {
-        const modelInfos = Store.getAll();
+        const modelInfos: any = Store.getAll();
+        console.log(this.model.name);
         const currentModelInfo = modelInfos[this.model.name];
         const { database, table, relations } = currentModelInfo;
         const fields = truthy(options?.select);
@@ -29,8 +30,6 @@ export class Repository<Entity extends Object> {
                 return `${k} = ?`;
             })
             .join(' AND ') : '';
-
-        console.log(modelInfos);
 
         const innerSQL = relationsOpt ? relationsOpt.map((r: string) => {
             if (r in relations) {
