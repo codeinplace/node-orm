@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { PropertyDecoratorFactory } from '@loopback/metadata';
-=======
 import 'reflect-metadata';
->>>>>>> parent of 29dc9b9... fix type
 import { EntityOptions } from "./EntityOptions";
 import { data } from './Storage';
 import { OneToOneOptions } from './RelationsOptions';
