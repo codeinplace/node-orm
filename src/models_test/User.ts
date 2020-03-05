@@ -1,9 +1,8 @@
-import { Entity, Column, OneToOne, PrimaryColumn } from '../decorators';
+import { Entity, Column, BelongsTo, PrimaryColumn } from '../model';
 import { Profile } from './Profile';
 
 @Entity({ database: 'test', table: 'user' })
 export class User {
-
     @PrimaryColumn()
     id: number;
 
@@ -19,6 +18,6 @@ export class User {
     @Column()
     created_at: Date;
 
-    @OneToOne(type => Profile, { column: 'profile_id', references: 'id' })
+    @BelongsTo((type) => Profile, { column: 'profile_id', references: 'id' })
     profile: Profile;
 }

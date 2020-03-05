@@ -1,4 +1,4 @@
-export interface OneToOneOptions {
+export interface RelationOptions {
     column: string;
     references: string;
 }

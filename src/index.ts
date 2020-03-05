@@ -1,7 +1,7 @@
 //@ts-nocheck
-import { Profile } from "./models_test/Profile";
-import { Repository } from "./Repository";
-import { Application } from "./Applicaton";
+import { Profile } from './models_test/Profile';
+import { Repository } from './Repository';
+import { Application } from './Applicaton';
 
 class Test {
     profileRepository: Repository<Profile>;
@@ -12,13 +12,12 @@ class Test {
 
     async listProducts() {
         const result = await this.profileRepository.find({
-            relations: [
-                { name: 'user', joinType: 'inner' }
-            ]
+            relations: [{ name: 'user', joinType: 'inner' }],
         });
         console.log(result);
     }
 }
 
-new Application().init();
-new Test().listProducts();
+new Application().init().then(() => {
+    new Test().listProducts();
+});

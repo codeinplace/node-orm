@@ -1,10 +1,13 @@
 import { RelationOptions } from './RelationsOptions';
 
-export function HasMany(
+export function BelongsTo(
     typeRef: (type?: any) => Function,
     options: RelationOptions | string,
 ): PropertyDecorator {
     return function(target: any, propertyKey: string) {
-        console.log(options);
+        // Storage.set(target.constructor.name, {
+        //     relation: 'belongs-to',
+        //     relations: {  }
+        // });
     };
 }

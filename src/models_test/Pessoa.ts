@@ -1,10 +1,8 @@
-import { Entity, Column, PrimaryColumn } from '../model';
+import { Entity, PrimaryColumn, HasMany, Column } from '../model';
 import { Fatura } from './Fatura';
-import { HasMany } from '../relation/HasMany';
 
 @Entity({ database: 'test', table: 'pessoa' })
 export class Pessoa {
-
     @PrimaryColumn()
     id: number;
 
@@ -14,6 +12,6 @@ export class Pessoa {
     @Column()
     endereco: string;
 
-    @HasMany(type => Fatura, { column: 'user_id', references: 'id' })
+    @HasMany((type) => Fatura, { column: 'user_id', references: 'id' })
     faturas: Fatura;
 }

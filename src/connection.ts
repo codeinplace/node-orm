@@ -1,8 +1,7 @@
 import { createPool } from '@codeinplace/node-mysql';
-//TODO: better type import, rename MySQLPromise to Pool type
-import { MySQLPromise } from '@codeinplace/node-mysql/dist/MySQLPromise';
+import { PoolConnection } from '@codeinplace/node-mysql';
 
-var instance: MySQLPromise;
+var instance: PoolConnection;
 
 if (!instance) {
     instance = createPool({
