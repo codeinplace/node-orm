@@ -1,8 +1,22 @@
 import { getObjByPath } from './utils';
-import produce, { Draft } from 'immer';
+import produce from 'immer';
 
 export class Storage {
     public static data = {};
+
+    static createClass(key: string) {
+        if (!(key in this.data)) {
+            this.change((draft) => {
+                draft[key] = {
+                    database: null,
+                    table: null,
+                    columns: [],
+                    relation: null,
+                    relations: [],
+                }
+            });
+        }
+    }
 
     static get(path: string) {
         return getObjByPath(this.data, path);

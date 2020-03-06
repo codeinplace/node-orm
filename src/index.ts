@@ -12,12 +12,15 @@ class Test {
 
     async listProducts() {
         const result = await this.profileRepository.find({
-            relations: [{ name: 'user', joinType: 'inner' }],
+            select: ['profile.id:prof', 'user:myUser', 'created_at'],
+            relations: ['user'],
         });
         console.log(result);
     }
 }
 
-new Application().init().then(() => {
-    new Test().listProducts();
-});
+new Test().listProducts();
+
+// new Application().init().then(() => {
+//     new Test().listProducts();
+// });

@@ -14,4 +14,7 @@ export class Profile {
 
     @BelongsTo((type) => User, { column: 'user_id', references: 'id' })
     user: User;
+
+    @Column()
+    created_at: Date;
 }
